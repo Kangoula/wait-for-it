@@ -25,7 +25,6 @@ Usage:
 USAGE
     exit 1
 }
-#  curl --data-urlencode \"script=$(<./test.groovy)\"
 
 wait_for() {
     if [[ $W4IT_TIMEOUT -gt 0 ]]; then
@@ -210,5 +209,3 @@ if [[ $W4IT_CMD != "" ]]; then
 else
     exit $RESULT
 fi
-
-
