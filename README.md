@@ -5,15 +5,19 @@
 ## Usage
 
 ```
-wait-for-it.sh host:port [-s] [-t timeout] [-- command args]
--h HOST | --host=HOST       Host or IP under test
--p PORT | --port=PORT       TCP port under test
-                            Alternatively, you specify the host and port as host:port
--s | --strict               Only execute subcommand if the test succeeds
--q | --quiet                Don't output any status messages
--t TIMEOUT | --timeout=TIMEOUT
-                            Timeout in seconds, zero for no timeout
--- COMMAND ARGS             Execute command with args after the test finishes
+wait-for-it.sh host:port/path [-s] [-t timeout] [--print-params] [-- command args]
+    -h HOST | --host=HOST       Host or IP under test
+    -p PORT | --port=PORT       TCP port under test
+    --path                      The path to test
+                                Alternatively, you specify the host, port and path as host:port/path
+    --retry <NUM>               The number of times the script is allowed to test the path
+                                Used only if a path is provided. Default is 100
+    -s | --strict               Only execute subcommand if the test succeeds
+    -q | --quiet                Don't output any status messages
+    -t TIMEOUT | --timeout=TIMEOUT
+                                Timeout in seconds, zero for no timeout
+    --print-params              Print all the arguments
+    -- COMMAND ARGS             Execute command with args after the test finishes
 ```
 
 ## Examples
@@ -58,5 +62,15 @@ wait-for-it.sh: waiting 15 seconds for www.google.com:81
 wait-for-it.sh: timeout occurred after waiting 15 seconds for www.google.com:81
 $ echo $?
 124
+```
+
+If you want to check if a path on the host is available you can specify it in the url. 
+
+```
+$ ./wait-for-it.sh http://mysite.com:81/some/path
+wait-for-it.sh: waiting 15 seconds for mysite.com:81
+wait-for-it.sh: mysite.com:81 is available after 0 seconds
+wait-for-it.sh: testing if mysite.com:81/some/path is available
+wait-for-it.sh: mysite.com:81/some/path is available after 0 seconds
 ```
 
