@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Réécriture et modification du script wait-for-it (https://github.com/vishnubob/wait-for-it) pour efluid
-# Ce script permet de tester si une adresse TCP répond aux requètes.
 cmdname=$(basename "$0")
 
 log() { if [[ $W4IT_QUIET -ne 1 ]]; then echo "$@" 1>&2; fi }
@@ -42,7 +40,7 @@ wait_for() {
             log "$cmdname: $W4IT_HOST:$W4IT_PORT is available after $((end_ts - start_ts)) seconds"
             if [[ $W4IT_PATH != "" ]]; then
                 log "$cmdname: testing if $W4IT_HOST:$W4IT_PORT$W4IT_PATH is available"
-                curl --retry "$W4IT_RETRY" "$W4IT_HOST:$W4IT_PORT$W4IT_PATH"
+                curl --fail --silent --output /dev/null --retry "$W4IT_RETRY" "$W4IT_HOST:$W4IT_PORT$W4IT_PATH"
                 res=$?
                 if [[ $res -eq 0 ]]; then
                     end_ts=$(date +%s)
@@ -209,3 +207,5 @@ if [[ $W4IT_CMD != "" ]]; then
 else
     exit $RESULT
 fi
+
+
